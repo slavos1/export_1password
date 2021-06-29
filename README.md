@@ -23,3 +23,10 @@ pip install -r requirements.txt
 ```shell
 make
 ```
+
+### How it works
+1. get all your 1password vaults
+2. for each vault do export
+3. for each item in the vault format it as username, password, note and url
+   - if there is no url, format se a Secure Note
+   - if it is a credit/debit card, create a special Secure Note for LastPass to recognize it as credit/debit card (Start Date is not filled in)
