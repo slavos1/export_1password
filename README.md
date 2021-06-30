@@ -22,6 +22,29 @@ pip install -r requirements.txt
 ## Running
 ```shell
 make
+# or
+source .venv/bin/activate
+./1password_export.py -o 1password_export.csv
+```
+## Script options
+```shell
+$ ./1password_export.py -h
+
+usage: 1password_export.py [-h] [-d] [-u PATH] [-i UUID [UUID ...]] [-g STRING] [-n INT] -o PATH
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d, --debug           Show debug logs (default: False)
+  -u PATH, --dumper PATH
+                        Dump raw items to the file (default: None)
+  -i UUID [UUID ...], --include UUID [UUID ...]
+                        Only show output for this UUID (default: None)
+  -g STRING, --grouping STRING
+                        Folder to be created in LastPass (default: 1password_import)
+  -n INT, --max-count INT
+                        Max item count to fetch (default: None)
+  -o PATH, --output-file PATH
+                        Output file (default: None)
 ```
 
 ### How it works
@@ -34,4 +57,5 @@ make
 5. now you can import it from LastPass (Open My Valut > Advanced Options > Import; select "Generic CSV File" as Source and upload it
 6. LastPass will offer to "Remove Duplicates", uncheck it (it is safer; you can remove dupes later yourself)
 
-The imported items are in LastPass folder(s) `1password_import :: <vault name>`, e.g. `1password_import :: Personal`. You can easily see all such imported item when you search for "import :: " in My LastPass Vault.
+The imported items are in LastPass folder(s) `1password_import :: <vault name>`, e.g. `1password_import :: Personal`. You can easily see all such imported item when you search for `import :: ` (note the spaces) in My LastPass Vault.
+
