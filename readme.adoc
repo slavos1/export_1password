@@ -1,8 +1,8 @@
 = Export 1password from command line
 
 // badges
-[link=#license]
-image::https://img.shields.io/badge/License-MIT-blue[License]
+image:https://img.shields.io/github/release/slavos1/export_1password?include_prereleases=&sort=semver[releases]
+image:https://img.shields.io/badge/license-MIT-blue[license]
 
 == Prerequisites
 We assume you have 1password CLI (`op`) working. Do `op signin` and create `.op.token` in the form like:
