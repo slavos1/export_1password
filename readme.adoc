@@ -1,0 +1,44 @@
+= Export 1password from command line
+
+== Prerequisites
+We assume you have 1password CLI (`op`) working. Do `op signin` and create `.op.token` in the form like:
+
+[source,sh]
+----
+export OP_SESSION_my=XXX
+----
+
+where `OP_SESSION_my` comes from the `op signin` output.
+
+== Python venv
+
+[source,sh]
+----
+python3 -m venv .venv
+# or python3.8 -m venv .venv or similar
+source .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt
+# see the help
+./1password_export.py -h
+----
+
+== Command line options
+
+*Usage*:
+----
+1password_export.py [-h] [-d] [-u PATH] [-i UUID [UUID ...]] [-g STRING] [-n INT] -o PATH
+----
+
+-u PATH, --dumper PATH:: Dump raw items to the file `PATH` (default: no file will be created)
+-h, --help            show this help message and exit
+  -d, --debug           Show debug logs (default: False)
+  -u PATH, --dumper PATH
+                        Dump raw items to the file (default: None)
+  -i UUID [UUID ...], --include UUID [UUID ...]
+                        Only show output for this UUID (default: None)
+  -g STRING, --grouping STRING
+                        Folder to be created in LastPass (default: 1password_import)
+  -n INT, --max-count INT
+                        Max item count to fetch (default: None)
+-o PATH, --output-file PATH:: Output CSV file path; required
