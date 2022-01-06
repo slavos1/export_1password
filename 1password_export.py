@@ -12,7 +12,7 @@ from itertools import chain
 import pandas as pd
 
 ONE_PASSWORD_CLI = "op"
-GROUPING_DELIMITER = ' :: '
+GROUPING_DELIMITER = " :: "
 MONTHS = """
 January
 February
@@ -56,16 +56,18 @@ def op(*args, fail_on_exc=True, quiet=False):
 
 
 def get_vaults():
-    return sorted(map(itemgetter('name'), op("list", "vaults")))
+    return sorted(map(itemgetter("name"), op("list", "vaults")))
+
 
 def simplify_url(url):
     """Remove params and fragment"""
     scheme, location, path, query, fragment = urlsplit(url)
-    return urlunsplit((scheme, location, path, '', ''))
+    return urlunsplit((scheme, location, path, "", ""))
+
 
 def as_credit_card(_fields):
-    fields = dict((f['n'], f['v']) for f in _fields)
-    _i = str(fields['expiry'])
+    fields = dict((f["n"], f["v"]) for f in _fields)
+    _i = str(fields["expiry"])
     expiry_year, expiry_month = _i[:4], _i[4:]
     return f"""NoteType:Credit Card
 Language:en-US
@@ -77,6 +79,7 @@ Start Date:,
 Expiration Date:{MONTHS[int(expiry_month) - 1]},{expiry_year}
 Notes:"""
 
+
 def to_csv(args):
     if args.max_count:
         _logger.info(f"Will fetch max {args.max_count} items")
@@ -85,11 +88,16 @@ def to_csv(args):
 
     for vault_name in get_vaults():
         grouping = GROUPING_DELIMITER.join([args.grouping, vault_name])
-        _logger.info(f"Fetching items from {vault_name} vault, will be grouped to {grouping}")
+        _logger.info(
+            f"Fetching items from {vault_name} vault, will be grouped to {grouping}"
+        )
         # Lastpass CSV: url,username,password,totp,extra,name,grouping,fav
         for i, _item in enumerate(
             sorted(
-                filter(lambda i: i["trashed"] == "N", op("list", "items", "--vault", vault_name)),
+                filter(
+                    lambda i: i["trashed"] == "N",
+                    op("list", "items", "--vault", vault_name),
+                ),
                 key=itemgetter("uuid"),
             ),
             1,
@@ -119,9 +127,11 @@ def to_csv(args):
                 secure_note = True
 
             try:
+
                 def _iter_sfields():
-                    for s in details.get('sections', []):
-                        yield s.get('fields')
+                    for s in details.get("sections", []):
+                        yield s.get("fields")
+
                 ccard_fields = chain.from_iterable(_iter_sfields())
                 note_content = as_credit_card(ccard_fields)
             except:

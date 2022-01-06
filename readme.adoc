@@ -1,5 +1,9 @@
 = Export 1password from command line
 
+// badges
+[link=#license]
+image::https://img.shields.io/badge/License-MIT-blue[License]
+
 == Prerequisites
 We assume you have 1password CLI (`op`) working. Do `op signin` and create `.op.token` in the form like:
 
@@ -23,6 +27,28 @@ pip install -r requirements.txt
 ./1password_export.py -h
 ----
 
+== Running
+
+[source,sh]
+----
+make
+----
+
+which will run
+
+[source,sh]
+----
+./1password_export.py -d -o ~/Downloads/1password_export.csv -u .dump.json
+----
+
+or run manually with different parameters:
+
+[source,sh]
+----
+source .venv/bin/activate
+./1password_export.py -o 1password_export.csv
+----
+
 == Command line options
 
 *Usage*:
@@ -30,15 +56,11 @@ pip install -r requirements.txt
 1password_export.py [-h] [-d] [-u PATH] [-i UUID [UUID ...]] [-g STRING] [-n INT] -o PATH
 ----
 
--u PATH, --dumper PATH:: Dump raw items to the file `PATH` (default: no file will be created)
--h, --help            show this help message and exit
-  -d, --debug           Show debug logs (default: False)
-  -u PATH, --dumper PATH
-                        Dump raw items to the file (default: None)
-  -i UUID [UUID ...], --include UUID [UUID ...]
-                        Only show output for this UUID (default: None)
-  -g STRING, --grouping STRING
-                        Folder to be created in LastPass (default: 1password_import)
-  -n INT, --max-count INT
-                        Max item count to fetch (default: None)
--o PATH, --output-file PATH:: Output CSV file path; required
+=== Options
+-h, --help:: show this help message and exit
+-d, --debug:: show debug logs
+-u PATH, --dumper PATH:: dump raw items as JSON to the file `PATH`
+-i UUID [UUID ...], --include UUID [UUID ...]:: show output only for this 1password UUID(s); if not specified, all UUIDs will be considered
+-g STRING, --grouping STRING:: folder to be created in LastPass; it will be set to `1password_import` by default
+-n INT, --max-count INT:: max item count to fetch; useful for testing
+-o PATH, --output-file PATH:: save output CSV to the file `PATH`; _required_
